@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1033258658060",
+    "project_id": "sharedshoppinglist-fc214",
+    "storage_bucket": "sharedshoppinglist-fc214.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1033258658060:android:24f7d17e5dd83dd363c129",
+        "android_client_info": {
+          "package_name": "edu.uga.cs.finalproject_sharedshoppinglist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1033258658060-1d7ed033c4rk7oflu51j6m6akf51r1n7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQVH9vkTm5IO2h1d0O-2059FFPOw7-XKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1033258658060-1d7ed033c4rk7oflu51j6m6akf51r1n7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
