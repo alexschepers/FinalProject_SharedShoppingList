@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "317992196357",
+    "firebase_url": "https://projectpractice-f126a-default-rtdb.firebaseio.com",
+    "project_id": "projectpractice-f126a",
+    "storage_bucket": "projectpractice-f126a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317992196357:android:dd655d5190c547746d7f6c",
+        "android_client_info": {
+          "package_name": "edu.uga.cs.ProjectPractice"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317992196357-tejdb6mv17uv5h23n1hbtg6kneped9fi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWSbg_X_BC8ewQqeGKuopZhy0JxkQtAVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317992196357-tejdb6mv17uv5h23n1hbtg6kneped9fi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
