@@ -11,7 +11,8 @@
         android:theme="@style/Theme.FinalProject_SharedShoppingList">
         <activity
             android:name=".RegisterUserActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName="edu.uga.cs.finalproject_sharedshoppinglist.MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
