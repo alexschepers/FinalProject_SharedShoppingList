@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="vertical"
@@ -13,21 +13,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="30dp"
-        android:text="Welcome to Shared Shopping List!"
+        android:text="Create an Account"
         android:textSize="24sp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginBottom="30dp"
-        android:text="The simple solution for roommates."
-        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -38,7 +30,7 @@
             android:text="Email:" />
 
         <EditText
-            android:id="@+id/editTextEmailAddress"
+            android:id="@+id/editTextRegisterEmailAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -49,6 +41,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -59,7 +52,7 @@
             android:text="Password:" />
 
         <EditText
-            android:id="@+id/editTextPassword"
+            android:id="@+id/editTextRegisterPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -71,23 +64,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:gravity="end"
         android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/register"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:text="New User? Click here to register."
-            android:textAllCaps="false"
-            android:textSize="10sp" />
 
         <Button
             android:id="@+id/confirmRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="Log In"
+            android:layout_marginLeft="50dp"
+            android:text="Register My Account"
             android:textAllCaps="false" />
     </LinearLayout>
 

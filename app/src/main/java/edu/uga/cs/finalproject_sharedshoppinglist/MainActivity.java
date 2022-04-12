@@ -4,12 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -18,13 +18,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.util.Arrays;
-import java.util.concurrent.Executor;
-
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    Button logInButton;
+    private Button logInButton;
+    private Button registerButton;
 
     private EditText emailEditText;
     private EditText passwordEditText;
@@ -39,19 +37,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        logInButton = findViewById(R.id.logIn);
+        logInButton = findViewById(R.id.confirmRegister);
+        logInButton.setBackgroundColor(Color.BLUE);
         logInButton.setOnClickListener(new LogInListener());
+
+
+        registerButton = findViewById(R.id.register);
+        registerButton.setBackgroundColor(Color.LTGRAY);
+        registerButton.setOnClickListener(new registerListener());
 
     }
 
-    private class LogInListener implements View.OnClickListener
-    {
+    private class LogInListener implements View.OnClickListener {
         @Override
-        public void onClick( View view ) {
+        public void onClick(View view) {
             Log.i(TAG, "LogIn button has been pressed");
 
-            emailEditText = findViewById(R.id.editTextTextEmailAddress);
-            passwordEditText = findViewById(R.id.editTextTextPassword);
+            emailEditText = findViewById(R.id.editTextEmailAddress);
+            passwordEditText = findViewById(R.id.editTextPassword);
 
             email = emailEditText.getText().toString();
             password = passwordEditText.getText().toString();
@@ -59,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, email);
             Log.i(TAG, password);
 
-            if (email.equals("") || password.equals("") ) {
+            if (email.equals("") || password.equals("")) {
                 Log.i(TAG, "email or password is null");
                 Toast.makeText(MainActivity.this, "Please enter a valid email address & password.",
                         Toast.LENGTH_SHORT).show();
@@ -88,4 +91,17 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
+
+
+
+    private class registerListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Log.i(TAG, "Register button has been pressed");
+            Intent intent = new Intent( view.getContext(), RegisterUserActivity.class );
+            startActivity( intent );
+
+        }
+    }
+
 }
