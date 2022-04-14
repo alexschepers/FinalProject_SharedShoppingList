@@ -23,9 +23,11 @@ public class RegisterUserActivity extends AppCompatActivity {
 
     private EditText registerEmail;
     private EditText registerPassword;
+    private EditText confirmRegisterPassword;
 
     private String registerEmailString;
     private String registerPasswordString;
+    private String confirmRegisterPasswordString;
 
     private Button registerUser;
 
@@ -50,9 +52,11 @@ public class RegisterUserActivity extends AppCompatActivity {
 
             registerEmail = findViewById(R.id.editTextRegisterEmailAddress);
             registerPassword = findViewById(R.id.editTextRegisterPassword);
+            confirmRegisterPassword = findViewById(R.id.editTextConfirmRegisterPassword);
 
             registerEmailString = registerEmail.getText().toString();
             registerPasswordString = registerPassword.getText().toString();
+            confirmRegisterPasswordString = confirmRegisterPassword.getText().toString();
 
             Log.i(TAG, registerEmailString);
             Log.i(TAG, registerPasswordString);
@@ -61,7 +65,10 @@ public class RegisterUserActivity extends AppCompatActivity {
                 Log.i(TAG, "email or password is null");
                 Toast.makeText(RegisterUserActivity.this, "Please enter a valid email address & password.",
                         Toast.LENGTH_SHORT).show();
-
+            } else if (!registerPasswordString.equals(confirmRegisterPasswordString)) {
+                Log.i(TAG, "password don't match");
+                Toast.makeText(RegisterUserActivity.this, "Passwords do not match.",
+                        Toast.LENGTH_SHORT).show();
             } else {
                 Log.i(TAG, "going into else statement");
 
