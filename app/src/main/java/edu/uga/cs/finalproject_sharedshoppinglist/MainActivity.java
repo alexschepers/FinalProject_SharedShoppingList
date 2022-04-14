@@ -31,11 +31,13 @@ public class MainActivity extends AppCompatActivity {
     private String password;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("Shared Shopping List");
 
         logInButton = findViewById(R.id.confirmRegister);
         logInButton.setBackgroundColor(Color.BLUE);
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         registerButton.setBackgroundColor(Color.LTGRAY);
         registerButton.setOnClickListener(new registerListener());
 
-    }
+    } // onCreate
 
     private class LogInListener implements View.OnClickListener {
         @Override
@@ -76,7 +78,12 @@ public class MainActivity extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     // Sign in success, update UI with the signed-in user's information
                                     Log.i(TAG, "signInWithEmail:success");
-                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    user = mAuth.getCurrentUser();
+                                    Toast.makeText(MainActivity.this, "Authentication success.",
+                                            Toast.LENGTH_SHORT).show();
+                                    // I think here is where we create a new intent for like a "home" screen.
+                                    Intent intent = new Intent(view.getContext(), HomeScreenActivity.class);
+                                    startActivity ( intent );
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "signInWithEmail:failure", task.getException());
@@ -86,11 +93,9 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
 
-            }
-
-
-        }
-    }
+            } // if-else
+        } // onClick
+    } //Login Listener
 
 
 
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent( view.getContext(), RegisterUserActivity.class );
             startActivity( intent );
 
-        }
-    }
+        } // onClick
+    } // registerListener
 
-}
+} // Main Activity

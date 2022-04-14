@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject_SharedShoppingList">
         <activity
+            android:name=".HomeScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterUserActivity"
             android:exported="false"
-            android:parentActivityName="edu.uga.cs.finalproject_sharedshoppinglist.MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

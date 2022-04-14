@@ -35,6 +35,7 @@ public class RegisterUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_user);
+        setTitle("Shared Shopping List");
 
         registerUser = findViewById(R.id.confirmRegister);
         registerUser.setOnClickListener(new createUser());
@@ -77,7 +78,7 @@ public class RegisterUserActivity extends AppCompatActivity {
                                 } else {
                                     // If sign in fails, display a message to the user.
                                     Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(RegisterUserActivity.this, "Authentication failed.",
+                                    Toast.makeText(RegisterUserActivity.this, "Authentication failed, please try again",
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
