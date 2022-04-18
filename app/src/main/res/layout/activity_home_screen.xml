@@ -11,29 +11,53 @@
         android:id="@+id/Home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="250dp"
         android:gravity="center_horizontal"
         android:text="Home"
         android:textSize="30sp" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/logoutButton"
+                android:id="@+id/neededButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="500dp"
-                android:text="Log Out"
+                android:text="View Needed Items"
                 android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/purchasedItems"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Purchased Items"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/totalsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="View Totals"
+                android:textAllCaps="false" />
+
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="100dp"
+        android:text="Log Out"
+        android:textAllCaps="false" />
 
 </LinearLayout>

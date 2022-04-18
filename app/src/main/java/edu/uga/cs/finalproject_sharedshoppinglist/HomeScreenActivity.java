@@ -14,9 +14,12 @@ import com.google.firebase.auth.FirebaseUser;
 public class HomeScreenActivity extends AppCompatActivity {
     private static final String TAG = "HomeScreenActivity";
 
+    private Button neededItems;
+    private Button purchasedItems;
+    private Button totals;
+
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private Button logout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +33,10 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         logout = findViewById(R.id.logoutButton);
         logout.setOnClickListener(new LogoutListener());
+
+        neededItems = findViewById(R.id.neededButton);
+        purchasedItems = findViewById(R.id.purchasedItems);
+        totals = findViewById(R.id.totalsButton);
 
     } // onCreate
 
