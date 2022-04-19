@@ -12,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="150dp"
         android:gravity="center_horizontal"
         android:text="Home"
-        android:textSize="30sp" />
+        android:textSize="43dp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,22 +31,37 @@
                 android:id="@+id/neededButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="View Needed Items"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/purchasedItems"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="View Purchased Items"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/addItem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="Add New Item"
+                android:textAllCaps="false"
+                android:textSize="20sp" />
 
             <Button
                 android:id="@+id/totalsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:text="View Totals"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textSize="20sp" />
 
         </LinearLayout>
     </ScrollView>

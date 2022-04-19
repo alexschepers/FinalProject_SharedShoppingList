@@ -35,8 +35,13 @@ public class HomeScreenActivity extends AppCompatActivity {
         logout.setOnClickListener(new LogoutListener());
 
         neededItems = findViewById(R.id.neededButton);
+        neededItems.setOnClickListener(new NeededItemsListener());
+
         purchasedItems = findViewById(R.id.purchasedItems);
+        purchasedItems.setOnClickListener(new PurchasedItemsListener());
+
         totals = findViewById(R.id.totalsButton);
+        totals.setOnClickListener(new TotalsListener());
 
     } // onCreate
 
@@ -53,5 +58,37 @@ public class HomeScreenActivity extends AppCompatActivity {
 
         } // onClick
     } // logoutListener
+
+    private class NeededItemsListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Log.i(TAG, "view needed items button has been pressed");
+                Intent intent = new Intent(view.getContext(), NeededItemsActivity.class);
+                startActivity(intent);
+        } // onClick
+
+    } // NeededItemsListener
+
+    private class PurchasedItemsListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Log.i(TAG, "view purchased items button has been pressed");
+            //Intent intent = new Intent(view.getContext(), PurchasedItemsActivity.class);
+            //startActivity(intent);
+
+
+        } // onClick
+
+    } // NeededItemsListener
+
+    private class TotalsListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Log.i(TAG, "totals button has been pressed");
+            //Intent intent = new Intent(view.getContext(), TotalsActivity.class);
+            //startActivity(intent);
+        } // onClick
+
+    } // NeededItemesListener
 
 } // Home Screen Activity
