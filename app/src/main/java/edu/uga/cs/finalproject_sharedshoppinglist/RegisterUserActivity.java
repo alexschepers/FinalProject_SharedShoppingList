@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -69,6 +70,16 @@ public class RegisterUserActivity extends AppCompatActivity {
                 Log.i(TAG, "password don't match");
                 Toast.makeText(RegisterUserActivity.this, "Passwords do not match.",
                         Toast.LENGTH_SHORT).show();
+            } else if (!isValidEmail(registerEmailString)) {
+                Log.i(TAG, "Email is in illegal format");
+                Toast.makeText(RegisterUserActivity.this, "Please enter a valid email.",
+                        Toast.LENGTH_SHORT).show();
+
+
+                // need to add some code here to see if email already exists
+
+
+
             } else {
                 Log.i(TAG, "going into else statement");
 
@@ -96,5 +107,13 @@ public class RegisterUserActivity extends AppCompatActivity {
         } // onClick()
 
     } // createUser
+
+    public boolean isValidEmail(CharSequence target) {
+        if (TextUtils.isEmpty(target)) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
 
 } // RegisterUserActivity
