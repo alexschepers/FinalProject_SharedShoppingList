@@ -17,6 +17,7 @@ public class HomeScreenActivity extends AppCompatActivity {
     private Button neededItems;
     private Button purchasedItems;
     private Button totals;
+    private Button addNew;
 
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     private Button logout;
@@ -40,8 +41,13 @@ public class HomeScreenActivity extends AppCompatActivity {
         purchasedItems = findViewById(R.id.purchasedItems);
         purchasedItems.setOnClickListener(new PurchasedItemsListener());
 
+        addNew = findViewById(R.id.addItem);
+        addNew.setOnClickListener(new AddItemListener());
+
         totals = findViewById(R.id.totalsButton);
         totals.setOnClickListener(new TotalsListener());
+
+
 
     } // onCreate
 
@@ -69,6 +75,16 @@ public class HomeScreenActivity extends AppCompatActivity {
 
     } // NeededItemsListener
 
+    private class AddItemListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            Log.i(TAG, "add item button has been pressed");
+            Intent intent = new Intent(view.getContext(), NewNeededItemActivity.class);
+            startActivity(intent);
+        } // onClick
+
+    } // TotalsListener
+
     private class PurchasedItemsListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
@@ -76,10 +92,9 @@ public class HomeScreenActivity extends AppCompatActivity {
             //Intent intent = new Intent(view.getContext(), PurchasedItemsActivity.class);
             //startActivity(intent);
 
-
         } // onClick
 
-    } // NeededItemsListener
+    } // PurchasedItemsListener
 
     private class TotalsListener implements View.OnClickListener {
         @Override
@@ -89,6 +104,6 @@ public class HomeScreenActivity extends AppCompatActivity {
             //startActivity(intent);
         } // onClick
 
-    } // NeededItemesListener
+    } // TotalsListener
 
 } // Home Screen Activity

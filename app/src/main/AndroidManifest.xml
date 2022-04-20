@@ -10,9 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject_SharedShoppingList">
         <activity
+            android:name=".NewNeededItemActivity"
+            android:exported="false"
+            android:parentActivityName=".HomeScreenActivity" />
+        <activity
             android:name=".NeededItemsActivity"
             android:exported="false"
-            android:parentActivityName=".HomeScreenActivity"/>
+            android:parentActivityName=".HomeScreenActivity" />
         <activity
             android:name=".HomeScreenActivity"
             android:exported="false" />
