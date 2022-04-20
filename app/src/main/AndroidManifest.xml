@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProject_SharedShoppingList">
         <activity
+            android:name=".PurchasedItemsListActivity"
+            android:exported="false" />
+        <activity
             android:name=".NewNeededItemActivity"
             android:exported="false"
             android:parentActivityName=".HomeScreenActivity" />
