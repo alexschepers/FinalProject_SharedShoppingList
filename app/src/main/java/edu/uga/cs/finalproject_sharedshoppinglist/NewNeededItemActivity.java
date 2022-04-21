@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class NewNeededItemActivity extends AppCompatActivity {
@@ -19,6 +20,8 @@ public class NewNeededItemActivity extends AppCompatActivity {
     private EditText itemNameView;
     private EditText quantityView;
     private Button addItemButton;
+
+    private DatabaseReference neededItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +33,6 @@ public class NewNeededItemActivity extends AppCompatActivity {
         quantityView = (EditText) findViewById(R.id.editTextItemQuantity);
 
         addItemButton = (Button) findViewById(R.id.addItemButton);
-
         addItemButton.setOnClickListener(new ButtonClickListener());
 
     }
@@ -44,10 +46,11 @@ public class NewNeededItemActivity extends AppCompatActivity {
 
             final NeededItem item = new NeededItem(itemName, quantity);
 
-            // Add a new element (JobLead) to the list of job leads in Firebase.
-
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            //DatabaseReference myRef = database.getReference("jobleads");
+            DatabaseReference myRef = database.getReference();
+
+            neededItems = myRef.child("neededItems");
+
 
             // First, a call to push() appends a new node to the existing list (one is created
             // if this is done for the first time).  Then, we set the value in the newly created
@@ -55,33 +58,29 @@ public class NewNeededItemActivity extends AppCompatActivity {
             // This listener will be invoked asynchronously, as no need for an AsyncTask, as in
             // the previous apps to maintain job leads.
 
-            /*
-            myRef.push().setValue( jobLead )
+            neededItems.push().setValue( item )
                     .addOnSuccessListener( new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             // Show a quick confirmation
-                            Toast.makeText(getApplicationContext(), "Job lead created for " + jobLead.getCompanyName(),
+                            Toast.makeText(getApplicationContext(), item.getItemName() + " has been added to the list.",
                                     Toast.LENGTH_SHORT).show();
 
                             // Clear the EditTexts for next use.
-                            companyNameView.setText("");
-                            phoneView.setText("");
-                            urlView.setText("");
-                            commentsView.setText("");
+                            itemNameView.setText("");
+                            quantityView.setText("");
                         }
                     })
                     .addOnFailureListener( new OnFailureListener() {
                         @Override
                         public void onFailure(Exception e) {
-                            Toast.makeText( getApplicationContext(), "Failed to create a Job lead for " + jobLead.getCompanyName(),
+                            Toast.makeText( getApplicationContext(), "Failed to create item for " + item.getItemName(),
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
         }
 
-             */
+
         }
 
-    }
-}
+   }

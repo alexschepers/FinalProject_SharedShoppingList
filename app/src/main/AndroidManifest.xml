@@ -13,6 +13,10 @@
             android:name=".PurchasedItemsListActivity"
             android:exported="false" />
         <activity
+            android:name=".PurchasedItemActivity"
+            android:exported="false"
+            android:parentActivityName=".HomeScreenActivity" />
+        <activity
             android:name=".NewNeededItemActivity"
             android:exported="false"
             android:parentActivityName=".HomeScreenActivity" />

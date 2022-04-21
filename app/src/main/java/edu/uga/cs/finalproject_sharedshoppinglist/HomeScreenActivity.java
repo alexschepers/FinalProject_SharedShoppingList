@@ -89,8 +89,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Log.i(TAG, "view purchased items button has been pressed");
-            //Intent intent = new Intent(view.getContext(), PurchasedItemsActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(view.getContext(), PurchasedItemActivity.class);
+            startActivity(intent);
 
         } // onClick
 
