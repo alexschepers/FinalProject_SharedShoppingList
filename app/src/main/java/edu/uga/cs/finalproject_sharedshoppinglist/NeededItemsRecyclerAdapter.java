@@ -51,7 +51,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
         Log.d( DEBUG_TAG, "onBindViewHolder: " + neededItem );
 
         holder.itemName.setText( neededItem.getItemName());
-        holder.quantity.setText( neededItem.getQuantity() );
+        holder.quantity.setText( String.valueOf(neededItem.getQuantity()));
     }
 
     @Override
