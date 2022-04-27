@@ -12,14 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/editNeeded"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="300dp"
-            android:layout_marginTop="15dp"
-            android:text="Edit" />
-
         <TextView
             android:id="@+id/shoppingList"
             android:layout_width="match_parent"
@@ -45,6 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="90dp"
                     android:layout_marginRight="100dp"
+                    android:layout_weight="1"
                     android:gravity="right"
                     android:text="Item"
                     android:textSize="22sp" />
@@ -53,6 +46,7 @@
                     android:id="@+id/quantityNeeded"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="right"
                     android:text="Quantity"
                     android:textSize="22sp" />
@@ -61,7 +55,7 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="450dp">
+                android:layout_height="515dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
