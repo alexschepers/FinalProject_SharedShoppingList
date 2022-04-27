@@ -5,11 +5,12 @@
       <map>
         <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2222222222222222" />
-        <entry key="app/src/main/res/layout/activity_needed_items.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/activity_needed_items.xml" value="0.31876525878906253" />
         <entry key="app/src/main/res/layout/activity_new_needed_item.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/layout/activity_purchased_item.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_purchased_items_list.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_add_needed_item_dialog.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/needed_item.xml" value="0.3098958333333333" />
       </map>
     </option>

@@ -43,7 +43,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
         return new NeededItemHolder( view );
     }
 
-    // This method fills in the values of the Views to show a JobLead
+    // This method fills in the values of the Views to show a NeededItem
     @Override
     public void onBindViewHolder( NeededItemHolder holder, int position ) {
         NeededItem neededItem = NeededItemList.get( position );
