@@ -9,7 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NeededItemsActivity extends AppCompatActivity {
+public class NeededItemsActivity extends AppCompatActivity implements AddNeededItemDialogFragment.AddNeededItemDialogListener {
     private static final String TAG = "NeededItemsActivity";
 
 
@@ -39,6 +42,15 @@ public class NeededItemsActivity extends AppCompatActivity {
         setTitle("Shared Shopping List");
 
         recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
+
+        FloatingActionButton floatingButton = findViewById(R.id.floatingActionButton);
+        floatingButton.setOnClickListener( new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new AddNeededItemDialogFragment();
+                showDialogFragment( newFragment );
+            }
+        });
 
         // use a linear layout manager for the recycler view
         layoutManager = new LinearLayoutManager(this );
@@ -85,6 +97,46 @@ public class NeededItemsActivity extends AppCompatActivity {
             }
         } );
 
+    }
 
+    // this is our own callback for a DialogFragment which adds a new job lead.
+    public void onFinishNewNeededItemDialog(NeededItem neededItem) {
+        // add the new job lead
+        // Add a new element (JobLead) to the list of job leads in Firebase.
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("neededItem");
+
+        // First, a call to push() appends a new node to the existing list (one is created
+        // if this is done for the first time).  Then, we set the value in the newly created
+        // list node to store the new job lead.
+        // This listener will be invoked asynchronously, as no need for an AsyncTask, as in
+        // the previous apps to maintain job leads.
+        myRef.push().setValue( neededItem )
+                .addOnSuccessListener( new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                        // Update the recycler view to include the new job lead
+                        neededItemList.add( neededItem );
+                        recyclerAdapter.notifyItemInserted(neededItemList.size() - 1);
+
+                        Log.d( TAG, "NeededItemSaved: " + neededItem );
+                        // Show a quick confirmation
+                        Toast.makeText(getApplicationContext(), neededItem.getItemName() + " added to list.",
+                                Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener( new OnFailureListener() {
+                    @Override
+                    public void onFailure(Exception e) {
+                        Toast.makeText( getApplicationContext(), "Failed to add item to list.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    void showDialogFragment( DialogFragment newFragment ) {
+        newFragment.show( getSupportFragmentManager(), null);
     }
 }
