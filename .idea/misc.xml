@@ -7,15 +7,15 @@
         <entry key="..\:/Users/maggi/AndroidStudioProjects/FinalProject_SharedShoppingList/app/src/main/res/layout/activity_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/maggi/AndroidStudioProjects/FinalProject_SharedShoppingList/app/src/main/res/layout/activity_needed_items.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/maggi/AndroidStudioProjects/FinalProject_SharedShoppingList/app/src/main/res/layout/activity_new_needed_item.xml" value="0.2463768115942029" />
-        <entry key="..\:/Users/maggi/AndroidStudioProjects/FinalProject_SharedShoppingList/app/src/main/res/layout/activity_purchased_item.xml" value="0.25" />
         <entry key="..\:/Users/maggi/AndroidStudioProjects/FinalProject_SharedShoppingList/app/src/main/res/layout/activity_purchased_items_list.xml" value="0.2463768115942029" />
         <entry key="..\:/Users/maggi/AndroidStudioProjects/FinalProject_SharedShoppingList/app/src/main/res/layout/activity_register_user.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/maggi/AndroidStudioProjects/FinalProject_SharedShoppingList/app/src/main/res/layout/dialog_content.xml" value="0.1" />
         <entry key="..\:/Users/maggi/AndroidStudioProjects/FinalProject_SharedShoppingList/app/src/main/res/layout/needed_item.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2222222222222222" />
-        <entry key="app/src/main/res/layout/activity_needed_items.xml" value="0.23125" />
+        <entry key="app/src/main/res/layout/activity_needed_items.xml" value="0.38050323486328125" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/needed_item.xml" value="0.3098958333333333" />
       </map>
     </option>
   </component>
@@ -24,5 +24,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.3098958333333333" />
+      </ProjectState>
+    </option>
   </component>
 </project>
