@@ -31,9 +31,9 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
     }
 
     // The adapter must have a ViewHolder class to "hold" one item to show.
-    class NeededItemHolder extends RecyclerView.ViewHolder {
+    class NeededItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public Button removeButton;
+        public ImageButton removeButton;
         TextView itemName;
         TextView quantity;
 
@@ -42,6 +42,18 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
 
             itemName = (TextView) itemView.findViewById( R.id.itemName );
             quantity = (TextView) itemView.findViewById( R.id.quantityNeededItem );
+            removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
+
+            removeButton.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View view) {
+            NeededItemList.remove(getAdapterPosition());
+            notifyItemRemoved(getAdapterPosition());
+            notifyItemRangeChanged(getAdapterPosition(), NeededItemList.size());
+
         }
     }
 
