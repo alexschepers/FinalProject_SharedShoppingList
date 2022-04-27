@@ -78,7 +78,7 @@ public class NewNeededItemActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
                     });
-        }
+            }
 
 
         }

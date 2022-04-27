@@ -1,17 +1,24 @@
 package edu.uga.cs.finalproject_sharedshoppinglist;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 /**
- * This is an adapter class for the RecyclerView to show all job leads.
+ * This is an adapter class for the RecyclerView to show all needed items.
  */
 public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItemsRecyclerAdapter.NeededItemHolder> {
 
@@ -26,6 +33,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
     // The adapter must have a ViewHolder class to "hold" one item to show.
     class NeededItemHolder extends RecyclerView.ViewHolder {
 
+        public Button removeButton;
         TextView itemName;
         TextView quantity;
 
@@ -43,15 +51,17 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
         return new NeededItemHolder( view );
     }
 
-    // This method fills in the values of the Views to show a JobLead
+
+    // This method fills in the values of the Views to show a needed item
     @Override
-    public void onBindViewHolder( NeededItemHolder holder, int position ) {
+    public void onBindViewHolder(@NonNull final NeededItemHolder holder, int position ) {
         NeededItem neededItem = NeededItemList.get( position );
 
         Log.d( DEBUG_TAG, "onBindViewHolder: " + neededItem );
 
         holder.itemName.setText( neededItem.getItemName());
         holder.quantity.setText( String.valueOf(neededItem.getQuantity()));
+
     }
 
     @Override

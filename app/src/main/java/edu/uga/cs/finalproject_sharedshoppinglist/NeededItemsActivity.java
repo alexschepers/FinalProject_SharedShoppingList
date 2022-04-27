@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -26,6 +27,7 @@ public class NeededItemsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter recyclerAdapter;
+    private Button removeButton;
 
     private List<NeededItem> neededItemList;
 
@@ -38,17 +40,6 @@ public class NeededItemsActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById( R.id.recyclerView );
 
-        /*
-        FloatingActionButton floatingButton = findViewById(R.id.floatingActionButton);
-        floatingButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment newFragment = new AddJobLeadDialogFragment();
-                showDialogFragment( newFragment );
-            }
-        });
-
-         */
         // use a linear layout manager for the recycler view
         layoutManager = new LinearLayoutManager(this );
         recyclerView.setLayoutManager( layoutManager );
@@ -58,6 +49,10 @@ public class NeededItemsActivity extends AppCompatActivity {
         DatabaseReference myRef = database.getReference("neededItems");
 
         neededItemList = new ArrayList<NeededItem>();
+
+
+        //removeButton.setOnClickListener(new ButtonClickListener());
+
 
         // Set up a listener (event handler) to receive a value for the database reference, but only one time.
         // This type of listener is called by Firebase once by immediately executing its onDataChange method.
@@ -79,7 +74,7 @@ public class NeededItemsActivity extends AppCompatActivity {
                 }
                 Log.d(TAG, "ReviewJobLeadsActivity.onCreate(): setting recyclerAdapter" );
 
-                // Now, create a JobLeadRecyclerAdapter to populate a ReceyclerView to display the job leads.
+                // Now, create a JobLeadRecyclerAdapter to populate a RecyclerView to display the needed items.
                 recyclerAdapter = new NeededItemsRecyclerAdapter( neededItemList );
                 recyclerView.setAdapter( recyclerAdapter );
             }
