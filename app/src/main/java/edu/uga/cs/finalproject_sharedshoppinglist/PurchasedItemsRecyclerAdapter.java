@@ -43,6 +43,7 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
         private TextView price;
 
         private DatabaseReference purchasedItems;
+        private DatabaseReference neededItems;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -70,6 +71,8 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
                     notifyItemRangeChanged(getAdapterPosition(), PurchasedItemList.size());
 
                     purchasedItems = myRef.child("purchasedItems");
+                    neededItems = myRef.child("neededItems");
+
                     Query query = purchasedItems.orderByChild("itemName");
                     query.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -78,6 +81,8 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                                 PurchasedItem purchasedItem = postSnapshot.getValue(PurchasedItem.class);
                                 if (purchasedItem.getItemName().equals(toMatch)) {
+                                    NeededItem toPush = new NeededItem(purchasedItem.getItemName(), purchasedItem.getQuantity());
+                                    neededItems.push().setValue(toPush);
                                     postSnapshot.getRef().removeValue();
                                     Log.i(DEBUG_TAG, "found a match, in if statement");
                                 }
