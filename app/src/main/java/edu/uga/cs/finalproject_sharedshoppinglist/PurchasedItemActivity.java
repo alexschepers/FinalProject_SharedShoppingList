@@ -70,9 +70,7 @@ public class PurchasedItemActivity extends AppCompatActivity {
                 for( DataSnapshot postSnapshot: snapshot.getChildren() ) {
                     PurchasedItem purchasedItem = postSnapshot.getValue(PurchasedItem.class);
                     purchasedItemList.add(purchasedItem);
-                    Log.d( TAG, "NeededItemsActivity.onCreate(): added: " + purchasedItem );
                 }
-                Log.d(TAG, "ReviewJobLeadsActivity.onCreate(): setting recyclerAdapter" );
 
                 // Now, create a JobLeadRecyclerAdapter to populate a RecyclerView to display the needed items.
                 recyclerAdapter = new PurchasedItemsRecyclerAdapter( purchasedItemList );

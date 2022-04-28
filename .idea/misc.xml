@@ -15,6 +15,7 @@
         <entry key="app/src/main/res/layout/activity_home_screen.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/layout/activity_needed_items.xml" value="0.38050323486328125" />
+        <entry key="app/src/main/res/layout/activity_purchased_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_register_user.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_add_needed_item_dialog.xml" value="0.24270833333333333" />
         <entry key="app/src/main/res/layout/fragment_enter_purchase_price_dialog.xml" value="0.24270833333333333" />

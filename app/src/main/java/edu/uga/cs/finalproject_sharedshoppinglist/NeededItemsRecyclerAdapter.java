@@ -101,6 +101,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
                     });
                     break;
                 case R.id.purchaseButton:
+                    String moveToPurchase = NeededItemList.get(getAdapterPosition()).getItemName();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = database.getReference();
 
@@ -112,6 +113,29 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
                     NeededItemList.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                     notifyItemRangeChanged(getAdapterPosition(), NeededItemList.size());
+
+                    neededItemsDatabase = myRef.child("neededItems");
+                    Query purchaseQuery = neededItemsDatabase.orderByChild("itemName");
+                    purchaseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                NeededItem neededItem = postSnapshot.getValue(NeededItem.class);
+                                if (neededItem.getItemName().equals(moveToPurchase)) {
+                                    postSnapshot.getRef().removeValue();
+                                    Log.i(DEBUG_TAG, "found a match, in if statement");
+                                }
+                                Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) {
+                        }
+
+                    });
                     break;
             }
         }

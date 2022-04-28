@@ -54,10 +54,20 @@
                 android:layout_marginTop="15dp"
                 android:orientation="horizontal">
 
+                <EditText
+                    android:id="@+id/editTextTextPersonName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="Enter Price"
+                    android:inputType="textPersonName|numberDecimal" />
+
                 <Button
                     android:id="@+id/purchaseButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     android:layout_weight="1"
                     android:text="Purchase"
                     android:textAllCaps="false" />

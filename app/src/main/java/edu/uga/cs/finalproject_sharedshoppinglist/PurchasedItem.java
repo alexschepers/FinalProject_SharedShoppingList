@@ -3,15 +3,15 @@ package edu.uga.cs.finalproject_sharedshoppinglist;
 public class PurchasedItem {
     private String itemName;
     private int quantity;
-    private String price;
+    private double price;
 
     public PurchasedItem()
     {
         this.itemName = null;
         this.quantity = -1;
-        this.price = null;
+        this.price = -1.0;
     }
-    public PurchasedItem( String itemName, int quantity, String price) {
+    public PurchasedItem( String itemName, int quantity, double price) {
         this.itemName = itemName;
         this.quantity = quantity;
         this.price = price;
@@ -33,11 +33,11 @@ public class PurchasedItem {
         this.quantity = quantity;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

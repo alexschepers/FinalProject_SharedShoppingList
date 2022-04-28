@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.finalproject_sharedshoppinglist.PurchasedItemsRecyclerAdapter.PurchasedItemHolder> {
 
-    public final String DEBUG_TAG = "NeededRecyclerAdapter";
+    public final String DEBUG_TAG = "Purchased...Adapter";
 
     private List<PurchasedItem> PurchasedItemList;
 
@@ -37,31 +37,26 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
     // The adapter must have a ViewHolder class to "hold" one item to show.
     class PurchasedItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public ImageButton removeButton;
-        public Button purchaseButton;
-        TextView itemName;
-        TextView quantity;
-        private EditText itemNameView;
-        private EditText quantityView;
-        private DatabaseReference purchasedItems;
+        private ImageButton removeButton;
+        private TextView itemName;
+        private TextView quantity;
+        private TextView price;
 
-        private NeededItem item;
+        private DatabaseReference purchasedItems;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
 
-
         public PurchasedItemHolder(View itemView ) {
             super(itemView);
 
-            itemName = (TextView) itemView.findViewById( R.id.itemName );
-            quantity = (TextView) itemView.findViewById( R.id.quantityNeededItem );
+            itemName = (TextView) itemView.findViewById( R.id.purchasedName );
+            quantity = (TextView) itemView.findViewById( R.id.quantityPurchased );
             removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
-            purchaseButton = (Button) itemView.findViewById(R.id.purchaseButton);
+            price = (TextView) itemView.findViewById(R.id.price);
 
             removeButton.setOnClickListener(this);
-            purchaseButton.setOnClickListener(this);
 
         }
 
@@ -104,7 +99,7 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
 
     @Override
     public edu.uga.cs.finalproject_sharedshoppinglist.PurchasedItemsRecyclerAdapter.PurchasedItemHolder onCreateViewHolder(ViewGroup parent, int viewType ) {
-        View view = LayoutInflater.from( parent.getContext()).inflate( R.layout.needed_item, parent, false );
+        View view = LayoutInflater.from( parent.getContext()).inflate( R.layout.purchased_item, parent, false );
         return new edu.uga.cs.finalproject_sharedshoppinglist.PurchasedItemsRecyclerAdapter.PurchasedItemHolder( view );
     }
 
@@ -118,6 +113,7 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
 
         holder.itemName.setText( purchasedItem.getItemName());
         holder.quantity.setText( String.valueOf(purchasedItem.getQuantity()));
+        holder.price.setText(String.valueOf(purchasedItem.getPrice()));
 
     }
 
