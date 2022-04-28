@@ -73,7 +73,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
             notifyItemRemoved(getAdapterPosition());
             notifyItemRangeChanged(getAdapterPosition(), NeededItemList.size());
 
-            /*
+
             neededItemsDatabase = myRef.child("neededItems");
             Query query = neededItemsDatabase.orderByChild("itemName");
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -83,7 +83,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
                     for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                         NeededItem neededItem = postSnapshot.getValue(NeededItem.class);
                         if (neededItem.getItemName().equals(toMatch)) {
-                            //postSnapshot.getRef().removeValue();
+                            postSnapshot.getRef().removeValue();
                             Log.i(DEBUG_TAG, "found a match, in if statement");
                         }
                         Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
@@ -97,7 +97,6 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
 
             });
 
-             */
         }
     }
 

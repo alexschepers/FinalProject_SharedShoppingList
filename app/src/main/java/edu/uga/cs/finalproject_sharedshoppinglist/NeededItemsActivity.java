@@ -104,7 +104,7 @@ public class NeededItemsActivity extends AppCompatActivity implements AddNeededI
         // add the new job lead
         // Add a new element (JobLead) to the list of job leads in Firebase.
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("neededItem");
+        DatabaseReference myRef = database.getReference("neededItems");
 
         // First, a call to push() appends a new node to the existing list (one is created
         // if this is done for the first time).  Then, we set the value in the newly created
