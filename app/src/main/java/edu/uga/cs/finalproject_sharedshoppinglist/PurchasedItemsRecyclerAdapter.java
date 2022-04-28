@@ -12,7 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -38,8 +43,14 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
         TextView quantity;
         private EditText itemNameView;
         private EditText quantityView;
-
         private DatabaseReference purchasedItems;
+
+        private NeededItem item;
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference();
+
+
 
         public PurchasedItemHolder(View itemView ) {
             super(itemView);
@@ -47,7 +58,7 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
             itemName = (TextView) itemView.findViewById( R.id.itemName );
             quantity = (TextView) itemView.findViewById( R.id.quantityNeededItem );
             removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
-            purchaseButton = (Button) itemView.findViewById(R.id.purchaseButton);
+            purchaseButton = (Button) itemView.findViewById(R.id.purchase);
 
             removeButton.setOnClickListener(this);
             purchaseButton.setOnClickListener(this);
@@ -58,9 +69,33 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
         public void onClick(View view) {
             switch(view.getId()) {
                 case R.id.removeButton:
+                    String toMatch = PurchasedItemList.get(getAdapterPosition()).getItemName();
                     PurchasedItemList.remove(getAdapterPosition());
                     notifyItemRemoved(getAdapterPosition());
                     notifyItemRangeChanged(getAdapterPosition(), PurchasedItemList.size());
+
+                    purchasedItems = myRef.child("purchasedItems");
+                    Query query = purchasedItems.orderByChild("itemName");
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                PurchasedItem purchasedItem = postSnapshot.getValue(PurchasedItem.class);
+                                if (purchasedItem.getItemName().equals(toMatch)) {
+                                    postSnapshot.getRef().removeValue();
+                                    Log.i(DEBUG_TAG, "found a match, in if statement");
+                                }
+                                Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) {
+                        }
+
+                    });
                     break;
 
             }
@@ -93,4 +128,6 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
 
 
 }
+
+
 
