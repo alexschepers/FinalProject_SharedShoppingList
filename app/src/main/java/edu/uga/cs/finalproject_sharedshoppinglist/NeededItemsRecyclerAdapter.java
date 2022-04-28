@@ -61,7 +61,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
             itemName = (TextView) itemView.findViewById(R.id.itemName);
             quantity = (TextView) itemView.findViewById(R.id.quantityNeededItem);
             removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
-            purchaseButton = (Button) itemView.findViewById(R.id.purchase);
+            purchaseButton = (Button) itemView.findViewById(R.id.purchaseButton);
 
             removeButton.setOnClickListener(this);
             purchaseButton.setOnClickListener(this);
@@ -100,7 +100,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
 
                     });
                     break;
-                case R.id.purchase:
+                case R.id.purchaseButton:
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = database.getReference();
 
