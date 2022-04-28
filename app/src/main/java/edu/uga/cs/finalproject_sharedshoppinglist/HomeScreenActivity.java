@@ -100,8 +100,8 @@ public class HomeScreenActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Log.i(TAG, "totals button has been pressed");
-            //Intent intent = new Intent(view.getContext(), TotalsActivity.class);
-            //startActivity(intent);
+            Intent intent = new Intent(view.getContext(), CostActivity.class);
+            startActivity(intent);
         } // onClick
 
     } // TotalsListener
