@@ -11,10 +11,12 @@
         android:theme="@style/Theme.FinalProject_SharedShoppingList">
         <activity
             android:name=".CostActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".HomeScreenActivity" />
         <activity
             android:name=".PurchasedItemsListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".HomeScreenActivity" />
         <activity
             android:name=".PurchasedItemActivity"
             android:exported="false"

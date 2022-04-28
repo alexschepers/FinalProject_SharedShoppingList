@@ -23,7 +23,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NeededItemsActivity extends AppCompatActivity implements AddNeededItemDialogFragment.AddNeededItemDialogListener {
+public class NeededItemsActivity extends AppCompatActivity
+        implements AddNeededItemDialogFragment.AddNeededItemDialogListener, EnterPurchasePriceDialogFragment.EnterPurchasePriceDialogListener {
+
     private static final String TAG = "NeededItemsActivity";
 
 

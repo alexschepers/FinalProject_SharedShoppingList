@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.FirebaseError;
@@ -38,15 +39,38 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
         this.NeededItemList = NeededItemList;
     }
 
+    @NonNull
+    @Override
+    public NeededItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.needed_item, parent, false);
+        return new NeededItemHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull NeededItemHolder holder, int position) {
+        NeededItem neededItem = NeededItemList.get(position);
+
+        Log.d(DEBUG_TAG, "onBindViewHolder: " + neededItem);
+
+        holder.itemName.setText(neededItem.getItemName());
+        holder.quantity.setText(String.valueOf(neededItem.getQuantity()));
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return NeededItemList.size();
+    }
+
     // The adapter must have a ViewHolder class to "hold" one item to show.
-    class NeededItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class NeededItemHolder extends RecyclerView.ViewHolder {
 
         public ImageButton removeButton;
+        private Button purchaseButton;
         private TextView itemName;
         private TextView quantity;
         private DatabaseReference neededItemsDatabase;
         private String itemNameString;
-        private int quantityInt;
 
         private NeededItem item;
 
@@ -60,68 +84,61 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<NeededItems
             itemNameString = itemName.toString();
             quantity = (TextView) itemView.findViewById(R.id.quantityNeededItem);
 
+            purchaseButton = (Button) itemView.findViewById(R.id.purchaseButton);
+
+            purchaseButton.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   Log.i(DEBUG_TAG, "purchase button on click" );
+
+                   DialogFragment newFragment = new EnterPurchasePriceDialogFragment();
+                   //showDialogFragment(newFragment);
+               }
+            }); // end of purchase button functionality
+
             removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
 
-            removeButton.setOnClickListener(this);
-
-        }
-
-        @Override
-        public void onClick(View view) {
-            String toMatch = NeededItemList.get(getAdapterPosition()).getItemName();
-            NeededItemList.remove(getAdapterPosition());
-            notifyItemRemoved(getAdapterPosition());
-            notifyItemRangeChanged(getAdapterPosition(), NeededItemList.size());
-
-
-            neededItemsDatabase = myRef.child("neededItems");
-            Query query = neededItemsDatabase.orderByChild("itemName");
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
+            removeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                public void onClick(View view) {
+                    String toMatch = NeededItemList.get(getAdapterPosition()).getItemName();
+                    NeededItemList.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    notifyItemRangeChanged(getAdapterPosition(), NeededItemList.size());
 
-                    for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                        NeededItem neededItem = postSnapshot.getValue(NeededItem.class);
-                        if (neededItem.getItemName().equals(toMatch)) {
-                            postSnapshot.getRef().removeValue();
-                            Log.i(DEBUG_TAG, "found a match, in if statement");
+
+                    neededItemsDatabase = myRef.child("neededItems");
+                    Query query = neededItemsDatabase.orderByChild("itemName");
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                NeededItem neededItem = postSnapshot.getValue(NeededItem.class);
+                                if (neededItem.getItemName().equals(toMatch)) {
+                                    postSnapshot.getRef().removeValue();
+                                    Log.i(DEBUG_TAG, "found a match, in if statement");
+                                }
+                                Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
+                            }
+
                         }
-                        Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
-                    }
 
-                }
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) {
+                        }
 
-                @Override
-                public void onCancelled(DatabaseError firebaseError) {
-                }
+                    }); // onDataChange
 
-            });
+                } // onClick
+
+            }); // end of remove button functionality
+
+
+
 
         }
     }
-
-        @Override
-        public NeededItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.needed_item, parent, false);
-            return new NeededItemHolder(view);
-        }
-
-
-        // This method fills in the values of the Views to show a needed item
-        @Override
-        public void onBindViewHolder(@NonNull final NeededItemHolder holder, int position) {
-            NeededItem neededItem = NeededItemList.get(position);
-
-            Log.d(DEBUG_TAG, "onBindViewHolder: " + neededItem);
-
-            holder.itemName.setText(neededItem.getItemName());
-            holder.quantity.setText(String.valueOf(neededItem.getQuantity()));
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return NeededItemList.size();
-        }
 }
+
 

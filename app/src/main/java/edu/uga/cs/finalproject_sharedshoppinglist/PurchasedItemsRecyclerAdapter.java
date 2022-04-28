@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
             itemName = (TextView) itemView.findViewById( R.id.itemName );
             quantity = (TextView) itemView.findViewById( R.id.quantityNeededItem );
             removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
-            purchaseButton = (Button) itemView.findViewById(R.id.purchase);
+            purchaseButton = (Button) itemView.findViewById(R.id.purchaseButton);
 
             removeButton.setOnClickListener(this);
             purchaseButton.setOnClickListener(this);
