@@ -1,5 +1,8 @@
 package edu.uga.cs.finalproject_sharedshoppinglist;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +41,8 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
     class PurchasedItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageButton removeButton;
+        private ImageButton updateButton;
+        private ImageButton doneEditing;
         private EditText itemName;
         private EditText quantity;
         private EditText price;
@@ -55,13 +60,17 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
             itemName = (EditText) itemView.findViewById( R.id.purchasedName );
             quantity = (EditText) itemView.findViewById( R.id.quantityPurchased );
             removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
+            updateButton = (ImageButton) itemView.findViewById(R.id.updateButton);
+            doneEditing = (ImageButton) itemView.findViewById(R.id.doneEditing);
             price = (EditText) itemView.findViewById(R.id.price);
 
-            //itemName.setEnabled(false);
-            //quantity.setEnabled(false);
-            //price.setEnabled(false);
+            itemName.setEnabled(false);
+            quantity.setEnabled(false);
+            price.setEnabled(false);
 
             removeButton.setOnClickListener(this);
+            updateButton.setOnClickListener(this);
+            doneEditing.setOnClickListener(this);
 
         }
 
@@ -69,11 +78,20 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
         public void onClick(View view) {
             switch(view.getId()) {
                 case R.id.updateButton:
-                    itemName.setFocusableInTouchMode(true);
-                    quantity.setFocusableInTouchMode(true);
-                    price.setFocusableInTouchMode(true);
-                    purchasedItems.push().setValue(PurchasedItemList.get(getAdapterPosition()));
+                    itemName.setEnabled(true);
+                    quantity.setEnabled(true);
+                    price.setEnabled(true);
+                    doneEditing.setVisibility(View.VISIBLE);
                     break;
+
+                case R.id.doneEditing:
+                    itemName.setEnabled(false);
+                    quantity.setEnabled(false);
+                    price.setEnabled(false);
+                    doneEditing.setVisibility(View.INVISIBLE);
+                    //purchasedItems.push().setValue(PurchasedItemList.get(getAdapterPosition()));
+                    break;
+
                 case R.id.removeButton:
                     String toMatch = PurchasedItemList.get(getAdapterPosition()).getItemName();
                     PurchasedItemList.remove(getAdapterPosition());
@@ -109,8 +127,14 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
                     break;
 
 
+                default:
+                    throw new IllegalStateException("Unexpected value: " + view.getId());
             }
         }
+    }
+
+    private void editPurchasedDialog() {
+
     }
 
     @Override

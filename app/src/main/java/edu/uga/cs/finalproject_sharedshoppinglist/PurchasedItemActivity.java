@@ -27,7 +27,7 @@ public class PurchasedItemActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter recyclerAdapter;
-    private Button removeButton;
+    private Button updateButton;
 
     private List<PurchasedItem> purchasedItemList;
 
@@ -51,7 +51,7 @@ public class PurchasedItemActivity extends AppCompatActivity {
         purchasedItemList = new ArrayList<PurchasedItem>();
 
 
-        //removeButton.setOnClickListener(new ButtonClickListener());
+        //updateButton.setOnClickListener(new ButtonClickListener());
 
 
         // Set up a listener (event handler) to receive a value for the database reference, but only one time.

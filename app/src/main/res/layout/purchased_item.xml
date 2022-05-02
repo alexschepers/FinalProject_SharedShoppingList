@@ -30,7 +30,7 @@
 
                 <EditText
                     android:id="@+id/purchasedName"
-                    android:focusable="false"
+
                     android:layout_width="167dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -46,7 +46,7 @@
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:focusable="false"
+
                     android:gravity="center"
                     android:text="Quantity Purchased" />
 
@@ -55,9 +55,10 @@
                     android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:focusable="false"
+
                     android:singleLine="false"
-                    android:text="Price" />
+                    android:text="Price"
+                    android:visibility="visible" />
 
 
             </LinearLayout>
@@ -85,6 +86,14 @@
                     android:layout_weight="1"
                     android:backgroundTint="#0DFFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_edit" />
+
+                <ImageButton
+                    android:id="@+id/doneEditing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    app:srcCompat="@android:drawable/ic_menu_save" />
 
             </LinearLayout>
 
