@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -74,7 +75,10 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
 
         @Override
         public void onClick(View view) {
-            Editable price = priceInput.getText();
+            //Editable price = priceInput.getText();
+            Double priceDouble = Double.parseDouble(priceInput.getText().toString());
+            DecimalFormat decim = new DecimalFormat("#.##");
+            Double price2 = Double.parseDouble(decim.format(priceDouble));
             switch (view.getId()) {
                 case R.id.removeButton:
                     String toMatch = NeededItemList.get(getAdapterPosition()).getItemName();
@@ -113,8 +117,11 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
 
 
                         purchasedItems = myRef.child("purchasedItems");
+                        NeededItem toChange = NeededItemList.get(getAdapterPosition());
+                        PurchasedItem toAdd = new PurchasedItem (toChange.getItemName(), toChange.getQuantity(), price2 );
 
-                        purchasedItems.push().setValue(NeededItemList.get(getAdapterPosition()));
+                        purchasedItems.push().setValue(toAdd);
+
                         //purchasedItems.push().setValue(NeededItemList.get(getAdapterPosition()));
                     //remove item from shopping list when it has been marked as purchased and moved to the purchased list
                         NeededItemList.remove(getAdapterPosition());

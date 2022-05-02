@@ -129,7 +129,7 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
 
         holder.itemName.setText( purchasedItem.getItemName());
         holder.quantity.setText( String.valueOf(purchasedItem.getQuantity()));
-        holder.price.setText(String.valueOf(purchasedItem.getPrice()));
+        holder.price.setText("$" + String.valueOf(purchasedItem.getPrice()));
 
     }
 
