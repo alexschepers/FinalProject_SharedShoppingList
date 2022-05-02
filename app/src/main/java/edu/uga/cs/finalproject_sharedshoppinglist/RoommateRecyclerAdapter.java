@@ -34,6 +34,7 @@ public class RoommateRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.fin
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
+
         public RoommateHolder(View itemView) {
             super(itemView);
 
@@ -60,7 +61,7 @@ public class RoommateRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.fin
         Log.d(DEBUG_TAG, "onBindViewHolder: " + roommate);
 
         holder.roommateName.setText(roommate.getRoommateName());
-        holder.roommateSpent.setText(String.valueOf(roommate.getSpent()));
+        holder.roommateSpent.setText("$" + String.valueOf(roommate.getSpent()));
 
     }
 

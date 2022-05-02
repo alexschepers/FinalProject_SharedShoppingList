@@ -55,7 +55,7 @@ public class CostActivity extends AppCompatActivity {
                 }
 
                 // Now, create a JobLeadRecyclerAdapter to populate a RecyclerView to display the needed items.
-                //recyclerAdapter = new RoommateRecyclerAdapter( roommateList );
+                recyclerAdapter = new RoommateRecyclerAdapter( roommateList );
                 recyclerView.setAdapter( recyclerAdapter );
             }
 

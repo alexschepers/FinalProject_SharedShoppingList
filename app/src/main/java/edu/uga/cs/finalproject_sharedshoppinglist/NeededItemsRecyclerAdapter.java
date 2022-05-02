@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,6 +55,8 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
         private int quantityInt;
 
         private DatabaseReference purchasedItems;
+
+        private DatabaseReference roommates;
 
         private NeededItem item;
 
@@ -115,6 +119,11 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference();
 
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userEmail = user.getEmail();
+                        roommates = myRef.child("roommates");
+                        Roommate roommate = new Roommate (userEmail, price2);
+                        roommates.push().setValue(roommate);
 
                         purchasedItems = myRef.child("purchasedItems");
                         NeededItem toChange = NeededItemList.get(getAdapterPosition());
