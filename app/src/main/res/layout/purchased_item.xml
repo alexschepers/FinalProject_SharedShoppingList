@@ -28,8 +28,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
 
-                <TextView
+                <EditText
                     android:id="@+id/purchasedName"
+                    android:focusable="false"
                     android:layout_width="167dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -40,19 +41,22 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
+                <EditText
                     android:id="@+id/quantityPurchased"
-                    android:layout_width="191dp"
+                    android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:focusable="false"
                     android:gravity="center"
                     android:text="Quantity Purchased" />
 
-                <TextView
+                <EditText
                     android:id="@+id/price"
-                    android:layout_width="136dp"
+                    android:layout_width="75dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:focusable="false"
+                    android:singleLine="false"
                     android:text="Price" />
 
 

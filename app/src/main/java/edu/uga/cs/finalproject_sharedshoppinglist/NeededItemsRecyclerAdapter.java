@@ -1,5 +1,7 @@
 package edu.uga.cs.finalproject_sharedshoppinglist;
 
+import android.content.Intent;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,6 +46,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
         TextView quantity;
         private EditText itemNameView;
         private EditText quantityView;
+        private EditText priceInput;
         private DatabaseReference neededItemsDatabase;
         private String itemNameString;
         private int quantityInt;
@@ -57,7 +61,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
 
         public NeededItemHolder(View itemView) {
             super(itemView);
-
+            priceInput = (EditText) itemView.findViewById(R.id.editTextPrice);
             itemName = (TextView) itemView.findViewById(R.id.itemName);
             quantity = (TextView) itemView.findViewById(R.id.quantityNeededItem);
             removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
@@ -70,6 +74,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
 
         @Override
         public void onClick(View view) {
+            Editable price = priceInput.getText();
             switch (view.getId()) {
                 case R.id.removeButton:
                     String toMatch = NeededItemList.get(getAdapterPosition()).getItemName();
@@ -101,42 +106,49 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
                     });
                     break;
                 case R.id.purchaseButton:
-                    String moveToPurchase = NeededItemList.get(getAdapterPosition()).getItemName();
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    DatabaseReference myRef = database.getReference();
+                    if (priceInput.getText().toString() != null){
+                        String moveToPurchase = NeededItemList.get(getAdapterPosition()).getItemName();
+                        FirebaseDatabase database = FirebaseDatabase.getInstance();
+                        DatabaseReference myRef = database.getReference();
 
 
-                    purchasedItems = myRef.child("purchasedItems");
+                        purchasedItems = myRef.child("purchasedItems");
 
-                    purchasedItems.push().setValue(NeededItemList.get(getAdapterPosition()));
+                        purchasedItems.push().setValue(NeededItemList.get(getAdapterPosition()));
+                        //purchasedItems.push().setValue(NeededItemList.get(getAdapterPosition()));
                     //remove item from shopping list when it has been marked as purchased and moved to the purchased list
-                    NeededItemList.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
-                    notifyItemRangeChanged(getAdapterPosition(), NeededItemList.size());
+                        NeededItemList.remove(getAdapterPosition());
+                        notifyItemRemoved(getAdapterPosition());
+                        notifyItemRangeChanged(getAdapterPosition(), NeededItemList.size());
 
-                    neededItemsDatabase = myRef.child("neededItems");
-                    Query purchaseQuery = neededItemsDatabase.orderByChild("itemName");
-                    purchaseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
+                        neededItemsDatabase = myRef.child("neededItems");
+                        Query purchaseQuery = neededItemsDatabase.orderByChild("itemName");
+                        purchaseQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                NeededItem neededItem = postSnapshot.getValue(NeededItem.class);
-                                if (neededItem.getItemName().equals(moveToPurchase)) {
-                                    postSnapshot.getRef().removeValue();
-                                    Log.i(DEBUG_TAG, "found a match, in if statement");
+                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                    NeededItem neededItem = postSnapshot.getValue(NeededItem.class);
+                                    if (neededItem.getItemName().equals(moveToPurchase)) {
+                                        postSnapshot.getRef().removeValue();
+                                        Log.i(DEBUG_TAG, "found a match, in if statement");
+                                    }
+                                    Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
                                 }
-                                Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
                             }
 
-                        }
+                            @Override
+                            public void onCancelled(DatabaseError firebaseError) {
+                            }
 
-                        @Override
-                        public void onCancelled(DatabaseError firebaseError) {
-                        }
-
-                    });
+                        });
+                    }else{
+                        Toast.makeText(view.getContext(), "Please enter a valid price", Toast.LENGTH_SHORT).show();
+                    }
                     break;
+                case R.id.updateButton:
+                    //Intent intent = new Intent();
+                    //itemName.setEnabled(true);
             }
         }
     }

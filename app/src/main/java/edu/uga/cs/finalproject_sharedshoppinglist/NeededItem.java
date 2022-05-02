@@ -9,11 +9,13 @@ package edu.uga.cs.finalproject_sharedshoppinglist;
 public class NeededItem {
     private String itemName;
     private int quantity;
+    private double price;
 
     public NeededItem()
     {
         this.itemName = null;
         this.quantity = -1;
+        //this.price = -1.0;
     }
 
     public NeededItem( String itemName, int quantity ) {

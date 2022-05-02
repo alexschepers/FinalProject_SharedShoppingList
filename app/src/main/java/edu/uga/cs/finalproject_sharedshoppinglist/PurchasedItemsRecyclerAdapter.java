@@ -38,9 +38,9 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
     class PurchasedItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageButton removeButton;
-        private TextView itemName;
-        private TextView quantity;
-        private TextView price;
+        private EditText itemName;
+        private EditText quantity;
+        private EditText price;
 
         private DatabaseReference purchasedItems;
         private DatabaseReference neededItems;
@@ -52,10 +52,14 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
         public PurchasedItemHolder(View itemView ) {
             super(itemView);
 
-            itemName = (TextView) itemView.findViewById( R.id.purchasedName );
-            quantity = (TextView) itemView.findViewById( R.id.quantityPurchased );
+            itemName = (EditText) itemView.findViewById( R.id.purchasedName );
+            quantity = (EditText) itemView.findViewById( R.id.quantityPurchased );
             removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
-            price = (TextView) itemView.findViewById(R.id.price);
+            price = (EditText) itemView.findViewById(R.id.price);
+
+            //itemName.setEnabled(false);
+            //quantity.setEnabled(false);
+            //price.setEnabled(false);
 
             removeButton.setOnClickListener(this);
 
@@ -64,6 +68,12 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
         @Override
         public void onClick(View view) {
             switch(view.getId()) {
+                case R.id.updateButton:
+                    itemName.setFocusableInTouchMode(true);
+                    quantity.setFocusableInTouchMode(true);
+                    price.setFocusableInTouchMode(true);
+                    purchasedItems.push().setValue(PurchasedItemList.get(getAdapterPosition()));
+                    break;
                 case R.id.removeButton:
                     String toMatch = PurchasedItemList.get(getAdapterPosition()).getItemName();
                     PurchasedItemList.remove(getAdapterPosition());
@@ -97,6 +107,7 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
 
                     });
                     break;
+
 
             }
         }
