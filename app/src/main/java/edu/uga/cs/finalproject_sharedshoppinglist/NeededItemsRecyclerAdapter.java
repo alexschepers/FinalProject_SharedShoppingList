@@ -60,6 +60,8 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
 
         private NeededItem item;
 
+        Roommate addToRoommate;
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
 
@@ -80,9 +82,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
         @Override
         public void onClick(View view) {
             //Editable price = priceInput.getText();
-            Double priceDouble = Double.parseDouble(priceInput.getText().toString());
-            DecimalFormat decim = new DecimalFormat("#.##");
-            Double price2 = Double.parseDouble(decim.format(priceDouble));
+
             switch (view.getId()) {
                 case R.id.removeButton:
                     String toMatch = NeededItemList.get(getAdapterPosition()).getItemName();
@@ -115,24 +115,60 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
                     break;
                 case R.id.purchaseButton:
                     if (priceInput.getText().toString() != null){
+                        Double priceDouble = Double.parseDouble(priceInput.getText().toString());
+                        DecimalFormat decim = new DecimalFormat("#.##");
+                        Double price2 = Double.parseDouble(decim.format(priceDouble));
+
                         String moveToPurchase = NeededItemList.get(getAdapterPosition()).getItemName();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference();
 
+                        // adding price to roommate part of database
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                         String userEmail = user.getEmail();
                         roommates = myRef.child("roommates");
-                        Roommate roommate = new Roommate (userEmail, price2);
-                        roommates.push().setValue(roommate);
+                        //addToRoommate = new Roommate (userEmail, price2);
+                        //roommates.push().setValue(addToRoommate);
 
+                        Query roommateQuery = roommates.orderByChild("spent");
+                        roommateQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                    Roommate roommate = postSnapshot.getValue(Roommate.class);
+                                    if (roommate.getRoommateName().equals(userEmail)) {
+                                        Double newPrice = price2 + roommate.getSpent();
+                                        postSnapshot.getRef().removeValue();
+                                        addToRoommate = new Roommate(userEmail, newPrice);
+                                    } else {
+                                        addToRoommate = new Roommate (userEmail, price2);
+                                    }
+                                }
+                                Log.i(DEBUG_TAG, String.valueOf(addToRoommate));
+                                roommates.push().setValue(addToRoommate);
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError firebaseError) {
+                            }
+
+
+                        });
+
+
+
+
+                        // adding to purchased items list
                         purchasedItems = myRef.child("purchasedItems");
                         NeededItem toChange = NeededItemList.get(getAdapterPosition());
                         PurchasedItem toAdd = new PurchasedItem (toChange.getItemName(), toChange.getQuantity(), price2 );
 
                         purchasedItems.push().setValue(toAdd);
 
-                        //purchasedItems.push().setValue(NeededItemList.get(getAdapterPosition()));
-                    //remove item from shopping list when it has been marked as purchased and moved to the purchased list
+
+                        //remove item from shopping list when it has been marked as purchased and moved to the purchased list
                         NeededItemList.remove(getAdapterPosition());
                         notifyItemRemoved(getAdapterPosition());
                         notifyItemRangeChanged(getAdapterPosition(), NeededItemList.size());
