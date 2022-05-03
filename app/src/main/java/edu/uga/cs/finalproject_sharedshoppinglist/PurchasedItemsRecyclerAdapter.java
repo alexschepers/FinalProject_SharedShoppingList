@@ -168,6 +168,38 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
                         }
 
                     });
+
+                    String priceToSplit = (price.getText().toString()).substring(1);
+                    double pricePaidToSubtract = Double.parseDouble(priceToSplit);
+
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String userEmail = user.getEmail();
+                    roommates = myRef.child("roommates");
+
+                    Query roommateQuery = roommates.orderByChild("spent");
+                    roommateQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                Roommate roommate = postSnapshot.getValue(Roommate.class);
+                                if (roommate.getRoommateName().equals(userEmail)) {
+                                    Double newPrice = roommate.getSpent() - pricePaidToSubtract;
+                                    postSnapshot.getRef().removeValue();
+                                    roommate2 = new Roommate(userEmail, newPrice);
+                                }
+                            }
+                            Log.i(DEBUG_TAG, String.valueOf(roommate2));
+                            roommates.push().setValue(roommate2);
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) {
+                        }
+
+
+                    });
                     break;
 
 
