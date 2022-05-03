@@ -82,6 +82,13 @@ public class CostActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
 
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference().child("purchasedItems");
+            myRef.removeValue();
+
+            DatabaseReference anotherRef = database.getReference().child("roommates");
+            anotherRef.removeValue();
+
         }
     }
 }
