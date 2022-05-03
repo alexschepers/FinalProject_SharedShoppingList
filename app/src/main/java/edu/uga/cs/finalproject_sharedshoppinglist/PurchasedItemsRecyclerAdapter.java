@@ -133,35 +133,6 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
 
                     });
 
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    String userEmail = user.getEmail();
-                    roommates = myRef.child("roommates");
-
-                    Query roommateQuery = roommates.orderByChild("spent");
-                    roommateQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-
-                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                Roommate roommate = postSnapshot.getValue(Roommate.class);
-                                if (roommate.getRoommateName().equals(userEmail)) {
-                                    Double newPrice = price2 + roommate.getSpent();
-                                    postSnapshot.getRef().removeValue();
-                                    roommate2 = new Roommate(userEmail, newPrice);
-                                }
-                            }
-                            Log.i(DEBUG_TAG, String.valueOf(roommate));
-                            roommates.push().setValue(roommate);
-
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError firebaseError) {
-                        }
-
-
-                    });
-
 
                     break;
 

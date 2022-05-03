@@ -44,6 +44,8 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
     class NeededItemHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public ImageButton removeButton;
+        public ImageButton updateButton;
+        public ImageButton doneEditing;
         public Button purchaseButton;
         TextView itemName;
         TextView quantity;
@@ -55,6 +57,7 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
         private int quantityInt;
 
         private DatabaseReference purchasedItems;
+        private DatabaseReference neededItems;
 
         private DatabaseReference roommates;
 
@@ -72,10 +75,14 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
             itemName = (TextView) itemView.findViewById(R.id.itemName);
             quantity = (TextView) itemView.findViewById(R.id.quantityNeededItem);
             removeButton = (ImageButton) itemView.findViewById(R.id.removeButton);
+            updateButton = (ImageButton) itemView.findViewById(R.id.updateButton);
+            doneEditing= (ImageButton) itemView.findViewById(R.id.doneEditing);
             purchaseButton = (Button) itemView.findViewById(R.id.purchaseButton);
 
             removeButton.setOnClickListener(this);
             purchaseButton.setOnClickListener(this);
+            updateButton.setOnClickListener(this);
+            doneEditing.setOnClickListener(this);
 
         }
 
@@ -199,8 +206,48 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
                     }
                     break;
                 case R.id.updateButton:
-                    //Intent intent = new Intent();
-                    //itemName.setEnabled(true);
+                    itemName.setEnabled(true);
+                    quantity.setEnabled(true);
+                    doneEditing.setVisibility(View.VISIBLE);
+                    break;
+
+                case R.id.doneEditing:
+                    itemName.setEnabled(false);
+                    quantity.setEnabled(false);
+                    doneEditing.setVisibility(View.INVISIBLE);
+                    String name = itemName.getText().toString();
+
+                    int quantityPurchased = Integer.parseInt(quantity.getText().toString());
+                   //String toSplitPrice = (priceInput.getText().toString()).substring(1);
+                    //double pricePaid = Double.parseDouble(toSplitPrice);
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    DatabaseReference myRef = database.getReference();
+
+                    neededItems = myRef.child("neededItems");
+
+                    Query query1 = neededItems.orderByChild("itemName");
+                    query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                PurchasedItem purchasedItem = postSnapshot.getValue(PurchasedItem.class);
+                                if (purchasedItem.getItemName().equals(name)) {
+                                    NeededItem toPush = new NeededItem(name, quantityPurchased);
+                                    postSnapshot.getRef().removeValue();
+                                    neededItems.push().setValue(toPush);
+                                    Log.i(DEBUG_TAG, "found a match, in if statement");
+                                }
+                                Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) {
+                        }
+
+                    });
             }
         }
     }
