@@ -5,6 +5,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +22,7 @@ public class CostActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.Adapter recyclerAdapter;
+    Button settle;
 
     private List<Roommate> roommateList;
 
@@ -36,6 +39,8 @@ public class CostActivity extends AppCompatActivity {
         // use a linear layout manager for the recycler view
         layoutManager = new LinearLayoutManager(this );
         recyclerView.setLayoutManager( layoutManager );
+
+
 
         // get a Firebase DB instance reference
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -65,8 +70,18 @@ public class CostActivity extends AppCompatActivity {
             }
         } );
 
+        settle = (Button) findViewById(R.id.settle);
+        settle.setOnClickListener(new CostActivity.ButtonClickListener());
 
 
 
+
+
+    }
+    private class ButtonClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+
+        }
     }
 }

@@ -30,7 +30,6 @@
 
                 <EditText
                     android:id="@+id/purchasedName"
-
                     android:layout_width="167dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="left"
@@ -38,24 +37,25 @@
                     android:autoLink="phone"
                     android:gravity="center"
                     android:text="itemName"
+                    android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/quantityPurchased"
                     android:layout_width="75dp"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-
                     android:gravity="center"
                     android:text="Quantity Purchased" />
 
                 <EditText
                     android:id="@+id/price"
                     android:layout_width="75dp"
+                    android:textColor="@color/black"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-
                     android:singleLine="false"
                     android:text="Price"
                     android:visibility="visible" />

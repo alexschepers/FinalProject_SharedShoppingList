@@ -15,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -49,6 +53,7 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
 
         private DatabaseReference purchasedItems;
         private DatabaseReference neededItems;
+        private DatabaseReference updatedPurchasedItems;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
@@ -85,11 +90,55 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
                     break;
 
                 case R.id.doneEditing:
+
                     itemName.setEnabled(false);
                     quantity.setEnabled(false);
                     price.setEnabled(false);
                     doneEditing.setVisibility(View.INVISIBLE);
-                    //purchasedItems.push().setValue(PurchasedItemList.get(getAdapterPosition()));
+                    String name = itemName.getText().toString();
+                    int quantityPurchased = Integer.parseInt(quantity.getText().toString());
+                    int pricePaid = Integer.parseInt(price.getText().toString());
+                    PurchasedItem updatedItem = new PurchasedItem(name,quantityPurchased,pricePaid);
+
+                    /*purchasedItems = myRef.child("purchasedItems");
+                    HashMap hashmap = new HashMap<>();
+                    hashmap.put("itemName",name);
+                    hashmap.put("price",pricePaid);
+                    hashmap.put("quantity",quantityPurchased);
+                    purchasedItems.setValue(updatedItem);
+                    purchasedItems.child("purchasedItems").updateChildren(hashmap);*/
+
+
+                    purchasedItems = myRef.child("purchasedItems");
+
+                    Query query = purchasedItems.orderByChild("itemName");
+                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                //PurchasedItem purchasedItem = postSnapshot.getValue(PurchasedItem.class);
+                                //if (purchasedItem.getItemName().equals(toMatch)) {
+                                    PurchasedItem toPush = new PurchasedItem(name, quantityPurchased,pricePaid);
+                                    purchasedItems.push().setValue(toPush);
+                                    //postSnapshot.getRef().removeValue();
+                                    Log.i(DEBUG_TAG, "found a match, in if statement");
+                                //}
+                                Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) {
+                        }
+
+                    });
+
+
+
+
+
                     break;
 
                 case R.id.removeButton:
@@ -101,8 +150,8 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
                     purchasedItems = myRef.child("purchasedItems");
                     neededItems = myRef.child("neededItems");
 
-                    Query query = purchasedItems.orderByChild("itemName");
-                    query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    Query query1 = purchasedItems.orderByChild("itemName");
+                    query1.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 

@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
+                <EditText
                     android:id="@+id/itemName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
+                <EditText
                     android:id="@+id/quantityNeededItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -67,12 +67,12 @@
                     android:id="@+id/purchaseButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:text="Purchase"
                     android:textAllCaps="false"
-                    android:textSize="12sp" />
+                    android:textSize="10sp" />
 
                 <ImageButton
                     android:id="@+id/removeButton"
@@ -91,6 +91,14 @@
                     android:layout_weight="1"
                     android:backgroundTint="#0DFFFFFF"
                     app:srcCompat="@android:drawable/ic_menu_edit" />
+
+                <ImageButton
+                    android:id="@+id/doneEditing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    app:srcCompat="@android:drawable/ic_menu_save" />
 
             </LinearLayout>
 
