@@ -53,10 +53,13 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
 
         private DatabaseReference purchasedItems;
         private DatabaseReference neededItems;
-        private DatabaseReference updatedPurchasedItems;
+        private DatabaseReference roommates;
+
+        Roommate roommate2;
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
+
 
 
         public PurchasedItemHolder(View itemView ) {
@@ -82,13 +85,16 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
         @Override
         public void onClick(View view) {
             switch(view.getId()) {
+                // updating button is pressed making everything edittable
                 case R.id.updateButton:
+
                     itemName.setEnabled(true);
                     quantity.setEnabled(true);
                     price.setEnabled(true);
                     doneEditing.setVisibility(View.VISIBLE);
                     break;
 
+                    // done updating button is pressed
                 case R.id.doneEditing:
 
                     itemName.setEnabled(false);
@@ -96,18 +102,10 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
                     price.setEnabled(false);
                     doneEditing.setVisibility(View.INVISIBLE);
                     String name = itemName.getText().toString();
+
                     int quantityPurchased = Integer.parseInt(quantity.getText().toString());
-                    int pricePaid = Integer.parseInt(price.getText().toString());
-                    PurchasedItem updatedItem = new PurchasedItem(name,quantityPurchased,pricePaid);
-
-                    /*purchasedItems = myRef.child("purchasedItems");
-                    HashMap hashmap = new HashMap<>();
-                    hashmap.put("itemName",name);
-                    hashmap.put("price",pricePaid);
-                    hashmap.put("quantity",quantityPurchased);
-                    purchasedItems.setValue(updatedItem);
-                    purchasedItems.child("purchasedItems").updateChildren(hashmap);*/
-
+                    String toSplitPrice = (price.getText().toString()).substring(1);
+                    double pricePaid = Double.parseDouble(toSplitPrice);
 
                     purchasedItems = myRef.child("purchasedItems");
 
@@ -117,13 +115,13 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
                             for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                //PurchasedItem purchasedItem = postSnapshot.getValue(PurchasedItem.class);
-                                //if (purchasedItem.getItemName().equals(toMatch)) {
+                                PurchasedItem purchasedItem = postSnapshot.getValue(PurchasedItem.class);
+                                if (purchasedItem.getItemName().equals(name)) {
                                     PurchasedItem toPush = new PurchasedItem(name, quantityPurchased,pricePaid);
+                                    postSnapshot.getRef().removeValue();
                                     purchasedItems.push().setValue(toPush);
-                                    //postSnapshot.getRef().removeValue();
                                     Log.i(DEBUG_TAG, "found a match, in if statement");
-                                //}
+                                }
                                 Log.i(DEBUG_TAG, dataSnapshot.getRef().toString());
                             }
 
@@ -135,8 +133,34 @@ public class PurchasedItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.
 
                     });
 
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String userEmail = user.getEmail();
+                    roommates = myRef.child("roommates");
+
+                    Query roommateQuery = roommates.orderByChild("spent");
+                    roommateQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                Roommate roommate = postSnapshot.getValue(Roommate.class);
+                                if (roommate.getRoommateName().equals(userEmail)) {
+                                    Double newPrice = price2 + roommate.getSpent();
+                                    postSnapshot.getRef().removeValue();
+                                    roommate2 = new Roommate(userEmail, newPrice);
+                                }
+                            }
+                            Log.i(DEBUG_TAG, String.valueOf(roommate));
+                            roommates.push().setValue(roommate);
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError firebaseError) {
+                        }
 
 
+                    });
 
 
                     break;

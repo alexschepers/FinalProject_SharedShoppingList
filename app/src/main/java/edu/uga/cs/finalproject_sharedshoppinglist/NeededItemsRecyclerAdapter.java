@@ -116,8 +116,8 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
                 case R.id.purchaseButton:
                     if (priceInput.getText().toString() != null){
                         Double priceDouble = Double.parseDouble(priceInput.getText().toString());
-                        DecimalFormat decim = new DecimalFormat("#.##");
-                        Double price2 = Double.parseDouble(decim.format(priceDouble));
+                        DecimalFormat decim = new DecimalFormat("0.00");
+                        Double price2 = Double.parseDouble( decim.format(priceDouble));
 
                         String moveToPurchase = NeededItemList.get(getAdapterPosition()).getItemName();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
