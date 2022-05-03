@@ -1,5 +1,7 @@
 package edu.uga.cs.finalproject_sharedshoppinglist;
 
+import static java.security.AccessController.getContext;
+
 import android.content.Intent;
 import android.text.Editable;
 import android.util.Log;
@@ -121,56 +123,19 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
                     });
                     break;
                 case R.id.purchaseButton:
-                    if (priceInput.getText().toString() != null){
+                    if (!(priceInput.getText().toString().equals(null))) {
                         Double priceDouble = Double.parseDouble(priceInput.getText().toString());
                         DecimalFormat decim = new DecimalFormat("0.00");
-                        Double price2 = Double.parseDouble( decim.format(priceDouble));
+                        Double price2 = Double.parseDouble(decim.format(priceDouble));
 
                         String moveToPurchase = NeededItemList.get(getAdapterPosition()).getItemName();
                         FirebaseDatabase database = FirebaseDatabase.getInstance();
                         DatabaseReference myRef = database.getReference();
 
-                        // adding price to roommate part of database
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String userEmail = user.getEmail();
-                        roommates = myRef.child("roommates");
-                        //addToRoommate = new Roommate (userEmail, price2);
-                        //roommates.push().setValue(addToRoommate);
-
-                        Query roommateQuery = roommates.orderByChild("spent");
-                        roommateQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                                    Roommate roommate = postSnapshot.getValue(Roommate.class);
-                                    if (roommate.getRoommateName().equals(userEmail)) {
-                                        Double newPrice = price2 + roommate.getSpent();
-                                        postSnapshot.getRef().removeValue();
-                                        addToRoommate = new Roommate(userEmail, newPrice);
-                                    } else {
-                                        addToRoommate = new Roommate (userEmail, price2);
-                                    }
-                                }
-                                Log.i(DEBUG_TAG, String.valueOf(addToRoommate));
-                                roommates.push().setValue(addToRoommate);
-
-                            }
-
-                            @Override
-                            public void onCancelled(DatabaseError firebaseError) {
-                            }
-
-
-                        });
-
-
-
-
                         // adding to purchased items list
                         purchasedItems = myRef.child("purchasedItems");
                         NeededItem toChange = NeededItemList.get(getAdapterPosition());
-                        PurchasedItem toAdd = new PurchasedItem (toChange.getItemName(), toChange.getQuantity(), price2 );
+                        PurchasedItem toAdd = new PurchasedItem(toChange.getItemName(), toChange.getQuantity(), price2);
 
                         purchasedItems.push().setValue(toAdd);
 
@@ -201,8 +166,43 @@ public class NeededItemsRecyclerAdapter extends RecyclerView.Adapter<edu.uga.cs.
                             }
 
                         });
-                    }else{
-                        Toast.makeText(view.getContext(), "Please enter a valid price", Toast.LENGTH_SHORT).show();
+
+
+                        // adding price to roommate part of database
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        String userEmail = user.getEmail();
+                        roommates = myRef.child("roommates");
+                        Log.i(DEBUG_TAG, "roommates" + String.valueOf(roommates));
+                        //addToRoommate = new Roommate(userEmail, price2);
+                        //roommates.push().setValue(addToRoommate);
+
+                        Query roommateQuery = roommates.orderByChild("spent");
+                        Log.i(DEBUG_TAG, "roommateQuery" + String.valueOf(roommateQuery));
+                        roommateQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                                    Roommate roommate = postSnapshot.getValue(Roommate.class);
+                                    if (roommate.getRoommateName().equals(userEmail)) {
+                                        Double newPrice = price2 + roommate.getSpent();
+                                        postSnapshot.getRef().removeValue();
+                                        addToRoommate = new Roommate(userEmail, newPrice);
+                                    } else {
+                                        addToRoommate = new Roommate(userEmail, price2);
+                                    }
+                                }
+                                Log.i(DEBUG_TAG, String.valueOf(addToRoommate));
+                                roommates.push().setValue(addToRoommate);
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError firebaseError) {
+                            }
+
+
+                        });
                     }
                     break;
                 case R.id.updateButton:

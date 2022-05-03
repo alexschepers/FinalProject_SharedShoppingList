@@ -83,6 +83,7 @@ public class CostActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
+
             DatabaseReference myRef = database.getReference().child("purchasedItems");
             myRef.removeValue();
 
