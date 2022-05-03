@@ -7,16 +7,6 @@
     android:orientation="vertical"
     tools:context=".HomeScreenActivity">
 
-    <TextView
-        android:id="@+id/Home"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="150dp"
-        android:gravity="center_horizontal"
-        android:text="Home"
-        android:textSize="43dp" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -26,6 +16,16 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="150dp"
+                android:gravity="center_horizontal"
+                android:text="Home"
+                android:textSize="43dp" />
 
             <Button
                 android:id="@+id/neededButton"

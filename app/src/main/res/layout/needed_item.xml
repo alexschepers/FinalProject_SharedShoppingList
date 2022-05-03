@@ -32,6 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
                     android:autoLink="phone"
                     android:gravity="center"
                     android:text="itemName"
@@ -43,6 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textColor="@color/black"
                     android:gravity="center"
                     android:text="quantityNeeded" />
 
@@ -72,11 +74,11 @@
                     android:layout_weight="1"
                     android:text="Purchase"
                     android:textAllCaps="false"
-                    android:textSize="10sp" />
+                    android:textSize="14sp" />
 
                 <ImageButton
                     android:id="@+id/removeButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="25dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
@@ -85,7 +87,7 @@
 
                 <ImageButton
                     android:id="@+id/updateButton"
-                    android:layout_width="wrap_content"
+                    android:layout_width="25dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
                     android:layout_weight="1"
@@ -94,7 +96,7 @@
 
                 <ImageButton
                     android:id="@+id/doneEditing"
-                    android:layout_width="wrap_content"
+                    android:layout_width="25dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:visibility="invisible"
